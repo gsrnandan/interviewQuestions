@@ -2,8 +2,10 @@
 """
 
 class TempTracker():
-	"""Temperature Tracker class 
+	""" Temperature Tracker class 
 	"""
+	minimumTemperature = 0
+	maximumTemperature = 110
 
 	def __init__(self):
 		
@@ -12,7 +14,7 @@ class TempTracker():
 
 
 	def isValid(self,temperature):
-	     """Method to validate the input temperature type and range
+	     """ Method to validate the input temperature type and range
 		 
 		 This method reads the input value and checks if the temperature is within the
 		 range of (0-110) and if its a valid int type
@@ -25,23 +27,27 @@ class TempTracker():
 		 
 	      """
 			if isinstance(temperature, (int,float,long)):
-				if temperature>=0 and temperature <= 110:
+				if temperature >= TempTracker.minimumTemperature and 
+				   temperature <= TempTracker.maximumTemperature:
 					return True
 			return False
 
 
-	def insert(self,*listOfTemps):
-			"""Method to insert a new temperature into the existing list of temperatures
+	def insert(self,*temperatures):
+			""" Method to insert a new temperature into the existing list of temperatures
 
 			    This function takes an integer argument and adds it to the tempTrackerList
 			    
 			    Args:
-			    	listOfTemps (list): List of temperatures 
+			    	temperatures (tuple): List of temperatures 
 			 """
-			for temperature in listOfTemps:
-				if self.isValid(temperature) :
-					self._tempTrackerList.append(int(temperature))
+			self._tempTrackerList.extend([temperature for temperature in temperatures if self.isValid(temperature)]
+			)
+# 			for temperature in listOfTemps:
+# 				if self.isValid(temperature) :
+# 					self._tempTrackerList.append(int(temperature))
 
+# 	add this else statement in the valid function 
 				else:
 					print "skipped adding '{0}' as it is either an Invalid temperature type or Range".format(temperature)
 
@@ -51,7 +57,7 @@ class TempTracker():
 			   This function will return the max of tempTrackerList
 			   
 			   Return:
-			   	(int): The maximum value in the list of temperatures
+			   	(int): The maximum value in the list of temperatures, None if the list is empty
 			 """
 
 			if self._tempTrackerList:
@@ -64,7 +70,7 @@ class TempTracker():
 			   This function will return the min of tempTrackerList
 			   
 			   Return:
-			   	(int): The minimum value in the list of temperatures
+			   	(int): The minimum value in the list of temperatures, None if the list is empty
 			"""
 			if self._tempTrackerList:
 				return min(self._tempTrackerList)	
@@ -76,14 +82,13 @@ class TempTracker():
 			      This function will calculate the mean of all integer values inside the tempTrackerList. The return type is float
 			      
 			      Return:
-			      	    (float): Returns the average of all the temperatures in the list of temperatures.
+			      	    (float): Returns the average of all the temperatures in the list of temperatures. None if the list is empty
 			"""
 
 			if self._tempTrackerList:
-				noOfElements = float(len(self._tempTrackerList))
+				noOfElements = len(self._tempTrackerList)
 				sumOfElements = float(sum(self._tempTrackerList))
-				mean = (sumOfElements/noOfElements)
-				return mean	
+				return sumOfElements / noOfElements
 
 
 if __name__ == '__main__':
