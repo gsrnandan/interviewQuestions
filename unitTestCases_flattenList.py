@@ -43,7 +43,9 @@ class FlattenListTestCase(unittest.TestCase):
     def test_nestedList(self):
         """ Test to check a nested List
         """
-        self.assertEqual(flattenList([1,[2],[3,4],[[5],6]]),[1,2,3,4,5,6])
+        actual = [1,[2],[3,4],[[5],6]]
+        expected = [1,2,3,4,5,6]
+        self.assertEqual(flattenList(actual, expected)
         
     def test_emptyNestedList(self):
         """ Test to check a nested list with an empty list
@@ -53,6 +55,7 @@ class FlattenListTestCase(unittest.TestCase):
     def test_invalidInput(self):
         """ Test to check a list with invalid input type
         """
+        self.assertRaises(TypeError, flatlist, 365)
         with self.assertRaises(TypeError):
             flattenList(365)
         with self.assertRaises(TypeError):
